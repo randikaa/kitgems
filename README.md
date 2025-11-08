@@ -176,10 +176,7 @@ For production use:
 7. **Deploy**: Deploy to Vercel (recommended) or your platform
 8. **Domain**: Configure custom domain and SSL
 
-## 📄 License
-
-MIT License - feel free to use this for your projects!
 
 ---
 
-Built with 💎 by Kiro
+Built By Randika Perera
