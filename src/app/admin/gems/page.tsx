@@ -128,6 +128,21 @@ export default function GemsManagement() {
     setUploadedImages(uploadedImages.filter((_, i) => i !== index));
   }
 
+  async function revalidateHomePage() {
+    try {
+      await fetch('/api/revalidate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          secret: process.env.NEXT_PUBLIC_REVALIDATION_SECRET || 'kitgems-revalidate-secret-2025',
+          path: '/',
+        }),
+      });
+    } catch (error) {
+      console.error('Failed to revalidate:', error);
+    }
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
@@ -171,6 +186,9 @@ export default function GemsManagement() {
         alert('Gem created successfully');
       }
 
+      // Trigger instant revalidation of home page
+      await revalidateHomePage();
+
       setShowModal(false);
       setEditingGem(null);
       resetForm();
@@ -192,6 +210,10 @@ export default function GemsManagement() {
       if (error) throw error;
 
       setGems(gems.filter(g => g.id !== id));
+      
+      // Trigger instant revalidation of home page
+      await revalidateHomePage();
+      
       alert('Gem deleted successfully');
     } catch (error: any) {
       alert('Error: ' + error.message);
