@@ -38,15 +38,23 @@ export default function UsersManagement() {
   async function loadUsers() {
     try {
       setLoadingUsers(true);
-      const { data, error } = await supabase
+      const { data, error, count } = await supabase
         .from('profiles')
-        .select('*')
+        .select('*', { count: 'exact' })
         .order('created_at', { ascending: false });
 
-      if (error) throw error;
+      console.log('Users query result:', { data, error, count, dataLength: data?.length });
+
+      if (error) {
+        console.error('Supabase error:', error);
+        throw error;
+      }
+      
+      console.log('Setting users:', data);
       setUsers(data || []);
     } catch (error) {
       console.error('Error loading users:', error);
+      alert('Error loading users. Check console for details.');
     } finally {
       setLoadingUsers(false);
     }

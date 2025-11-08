@@ -4,13 +4,18 @@ import GemCard from '@/components/GemCard';
 import { supabase } from '@/lib/supabase/client';
 import { Gem, AuctionWithGem } from '@/lib/types';
 
+// Revalidate this page every 60 seconds
+export const revalidate = 60;
+
 async function getHomeData() {
-  const { data: featuredGems } = await supabase
+  const { data: featuredGems, error: gemsError } = await supabase
     .from('gems')
     .select('*')
     .eq('featured', true)
     .eq('in_stock', true)
     .limit(3);
+
+  console.log('Featured gems query:', { featuredGems, gemsError, count: featuredGems?.length });
 
   const { data: auctionsData } = await supabase
     .from('auctions')
