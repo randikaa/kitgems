@@ -75,7 +75,7 @@ export default function AdminDashboard() {
 const { data: ordersData } = await supabase
   .from('orders')
   .select('total')
-  .returns<{ total: number | string | null }[]>(); // <-- add this
+  .returns<{ total: number | string | null }[]>(); 
 
 const totalRevenue = (ordersData ?? []).reduce(
   (sum, order) => sum + Number(order.total ?? 0),
