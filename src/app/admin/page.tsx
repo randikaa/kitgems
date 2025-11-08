@@ -72,16 +72,17 @@ export default function AdminDashboard() {
         .select('*', { count: 'exact', head: true });
 
       // Get total revenue
-      const { data: ordersData } = await supabase
-        .from('orders')
-        .select('total')
-        .returns<{ total: number | string | null }[]>();
+const { data: ordersData } = await supabase
+  .from('orders')
+  .select('total')
+  .returns<{ total: number | string | null }[]>(); // <-- add this
 
-      const totalRevenue = (ordersData ?? []).reduce(
-        (sum, row) => sum + Number(row.total ?? 0),
-        0
-      );
-      const avgOrderValue = ordersCount ? totalRevenue / ordersCount : 0;
+const totalRevenue = (ordersData ?? []).reduce(
+  (sum, order) => sum + Number(order.total ?? 0),
+  0
+);
+const avgOrderValue = ordersCount ? totalRevenue / ordersCount : 0;
+
 
       // Get recent users (last 7 days)
       const sevenDaysAgo = new Date();
