@@ -60,8 +60,8 @@ export default function CartPage() {
     if (newQuantity < 1) return;
     
     try {
-      const { error } = await supabase
-        .from('cart')
+      const cart = supabase.from('cart') as any;
+      const { error } = await cart
         .update({ quantity: newQuantity })
         .eq('id', itemId);
 

@@ -78,8 +78,8 @@ export default function UsersManagement() {
     }
 
     try {
-      const { error } = await supabase
-        .from('profiles')
+      const profiles = supabase.from('profiles') as any;
+      const { error } = await profiles
         .update({ is_admin: !currentStatus })
         .eq('id', userId);
 
@@ -94,8 +94,8 @@ export default function UsersManagement() {
 
   async function handleUpdateUser(updatedUser: User) {
     try {
-      const { error } = await supabase
-        .from('profiles')
+      const profiles = supabase.from('profiles') as any;
+      const { error } = await profiles
         .update({
           full_name: updatedUser.full_name,
           phone: updatedUser.phone,

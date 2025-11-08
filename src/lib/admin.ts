@@ -55,7 +55,7 @@ export async function isAdmin(): Promise<boolean> {
     }
 
     console.log('Admin check result:', data);
-    return data?.is_admin === true;
+    return (data as any)?.is_admin === true;
   } catch (error) {
     console.error('Error in isAdmin:', error);
     return false;
@@ -76,7 +76,7 @@ export async function checkUserIsAdmin(userId: string): Promise<boolean> {
       .single();
 
     if (error) return false;
-    return data?.is_admin === true;
+    return (data as any)?.is_admin === true;
   } catch (error) {
     return false;
   }
@@ -89,8 +89,8 @@ export async function checkUserIsAdmin(userId: string): Promise<boolean> {
  */
 export async function makeUserAdmin(userId: string): Promise<boolean> {
   try {
-    const { error } = await supabase
-      .from('profiles')
+    const profiles = supabase.from('profiles') as any;
+    const { error } = await profiles
       .update({ is_admin: true })
       .eq('id', userId);
 
@@ -107,8 +107,8 @@ export async function makeUserAdmin(userId: string): Promise<boolean> {
  */
 export async function removeUserAdmin(userId: string): Promise<boolean> {
   try {
-    const { error } = await supabase
-      .from('profiles')
+    const profiles = supabase.from('profiles') as any;
+    const { error } = await profiles
       .update({ is_admin: false })
       .eq('id', userId);
 

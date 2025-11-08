@@ -74,9 +74,13 @@ export default function AdminDashboard() {
       // Get total revenue
       const { data: ordersData } = await supabase
         .from('orders')
-        .select('total');
-      
-      const totalRevenue = ordersData?.reduce((sum, order) => sum + Number((order as any).total), 0) || 0;
+        .select('total')
+        .returns<{ total: number | string | null }[]>();
+
+      const totalRevenue = (ordersData ?? []).reduce(
+        (sum, row) => sum + Number(row.total ?? 0),
+        0
+      );
       const avgOrderValue = ordersCount ? totalRevenue / ordersCount : 0;
 
       // Get recent users (last 7 days)

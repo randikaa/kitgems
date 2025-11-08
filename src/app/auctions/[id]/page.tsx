@@ -34,12 +34,13 @@ export default function AuctionDetailPage({ params }: { params: Promise<{ id: st
 
       if (error) throw error;
 
+      const d = data as any;
       const auctionData: AuctionWithGem & { bids: Bid[] } = {
-        ...data,
-        gem: Array.isArray(data.gem) ? data.gem[0] : data.gem,
-        startTime: new Date(data.start_time),
-        endTime: new Date(data.end_time),
-        bids: data.bids || [],
+        ...d,
+        gem: Array.isArray(d.gem) ? d.gem[0] : d.gem,
+        startTime: new Date(d.start_time),
+        endTime: new Date(d.end_time),
+        bids: d.bids || [],
       };
 
       setAuction(auctionData);

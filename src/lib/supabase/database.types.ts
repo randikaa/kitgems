@@ -16,6 +16,7 @@ export interface Database {
           full_name: string | null
           avatar_url: string | null
           phone: string | null
+          is_admin: boolean
           created_at: string
           updated_at: string
         }
@@ -25,6 +26,7 @@ export interface Database {
           full_name?: string | null
           avatar_url?: string | null
           phone?: string | null
+          is_admin?: boolean
           created_at?: string
           updated_at?: string
         }
@@ -34,9 +36,11 @@ export interface Database {
           full_name?: string | null
           avatar_url?: string | null
           phone?: string | null
+          is_admin?: boolean
           created_at?: string
           updated_at?: string
         }
+        Relationships: []
       }
       gems: {
         Row: {
@@ -289,5 +293,9 @@ export interface Database {
         }
       }
     }
+    Views: { [_ in never]: never }
+    Functions: { [_ in never]: never }
+    Enums: { [_ in never]: never }
+    CompositeTypes: { [_ in never]: never }
   }
 }
