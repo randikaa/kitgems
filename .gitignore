@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Documentation and SQL fix files
+*.md
+!README.md
+supabase/*.sql
+!supabase/schema.sql
+!supabase/seed.sql

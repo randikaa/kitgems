@@ -1,26 +1,333 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-bg: #0A0A0A;
+  --color-text: #ffffff;
+  --color-primary: #243B6B;
+  --color-accent: #D4AF37;
+}
+
+/* Dark Mode (Default) */
+[data-mode="dark"] {
+  --color-bg: #0A0A0A;
+  --color-text: #ffffff;
+}
+
+/* Light Mode */
+[data-mode="light"] {
+  --color-bg: #F5F5F5;
+  --color-text: #0A0A0A;
+}
+
+/* Sapphire Theme (Default) */
+[data-theme="sapphire"] {
+  --color-primary: #243B6B;
+  --color-accent: #D4AF37;
+}
+
+/* Ruby Theme */
+[data-theme="ruby"] {
+  --color-primary: #8B0000;
+  --color-accent: #FFD700;
+}
+
+/* Emerald Theme */
+[data-theme="emerald"] {
+  --color-primary: #0F4C3A;
+  --color-accent: #50C878;
+}
+
+/* Diamond Theme */
+[data-theme="diamond"] {
+  --color-primary: #1E293B;
+  --color-accent: #E0E7FF;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-serif: 'Playfair Display', serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Light mode adjustments */
+[data-mode="light"] .bg-black {
+  background: #F5F5F5;
+}
+
+[data-mode="light"] .bg-black\/80 {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+[data-mode="light"] .text-white {
+  color: #0A0A0A;
+}
+
+[data-mode="light"] .text-white\/80 {
+  color: rgba(10, 10, 10, 0.8);
+}
+
+[data-mode="light"] .text-white\/60 {
+  color: rgba(10, 10, 10, 0.6);
+}
+
+[data-mode="light"] .text-white\/40 {
+  color: rgba(10, 10, 10, 0.4);
+}
+
+[data-mode="light"] .border-gold\/20 {
+  border-color: rgb(from var(--color-accent) r g b / 0.3);
+}
+
+[data-mode="light"] .bg-white\/10 {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+[data-mode="light"] .bg-white\/5 {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+[data-mode="light"] .from-royal-blue\/20,
+[data-mode="light"] .from-royal-blue\/10 {
+  --tw-gradient-from: rgb(from var(--color-primary) r g b / 0.15);
+}
+
+[data-mode="light"] .from-royal-blue\/30 {
+  --tw-gradient-from: rgb(from var(--color-primary) r g b / 0.2);
+}
+
+[data-mode="light"] .via-black {
+  --tw-gradient-via: #F5F5F5;
+}
+
+[data-mode="light"] .to-black {
+  --tw-gradient-to: #F5F5F5;
+}
+
+[data-mode="light"] .to-royal-blue\/10 {
+  --tw-gradient-to: rgb(from var(--color-primary) r g b / 0.1);
+}
+
+[data-mode="light"] .placeholder-white\/40::placeholder {
+  color: rgba(10, 10, 10, 0.4);
+}
+
+[data-mode="light"] .shadow-gold\/20,
+[data-mode="light"] .shadow-gold\/30 {
+  --tw-shadow-color: rgb(from var(--color-accent) r g b / 0.4);
+}
+
+/* Light mode card backgrounds */
+[data-mode="light"] .from-royal-blue\/40 {
+  --tw-gradient-from: rgba(255, 255, 255, 0.9);
+}
+
+[data-mode="light"] .backdrop-blur-md,
+[data-mode="light"] .backdrop-blur-sm,
+[data-mode="light"] .backdrop-blur {
+  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+/* Ensure proper contrast in light mode */
+[data-mode="light"] .text-black {
+  color: #0A0A0A;
+}
+
+[data-mode="light"] header {
+  border-bottom-color: rgb(from var(--color-accent) r g b / 0.2);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Hero section light mode fixes */
+[data-mode="light"] section .bg-gradient-to-br.from-royal-blue\/30 {
+  background: linear-gradient(to bottom right, 
+    rgb(from var(--color-primary) r g b / 0.15), 
+    rgba(245, 245, 245, 0.95), 
+    #F5F5F5
+  );
+}
+
+/* Light mode glow effects - make them more visible */
+[data-mode="light"] .from-gold\/20 {
+  --tw-gradient-from: rgb(from var(--color-accent) r g b / 0.3);
+}
+
+[data-mode="light"] .from-gold\/30 {
+  --tw-gradient-from: rgb(from var(--color-accent) r g b / 0.4);
+}
+
+[data-mode="light"] .from-gold\/40 {
+  --tw-gradient-from: rgb(from var(--color-accent) r g b / 0.5);
+}
+
+[data-mode="light"] .to-royal-blue\/20 {
+  --tw-gradient-to: rgb(from var(--color-primary) r g b / 0.3);
+}
+
+[data-mode="light"] .to-royal-blue\/30 {
+  --tw-gradient-to: rgb(from var(--color-primary) r g b / 0.4);
+}
+
+[data-mode="light"] .to-royal-blue\/40 {
+  --tw-gradient-to: rgb(from var(--color-primary) r g b / 0.5);
+}
+
+/* Light mode - enhance blur effects visibility */
+[data-mode="light"] .blur-3xl,
+[data-mode="light"] .blur-2xl {
+  opacity: 0.6;
+}
+
+/* Light mode button contrast */
+[data-mode="light"] .bg-white\/10.backdrop-blur {
+  background: rgba(0, 0, 0, 0.08);
+  border-color: rgb(from var(--color-accent) r g b / 0.4);
+}
+
+[data-mode="light"] .bg-white\/10.backdrop-blur:hover {
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.text-gold {
+  color: var(--color-accent);
+}
+
+.bg-gold {
+  background-color: var(--color-accent);
+}
+
+.border-gold {
+  border-color: var(--color-accent);
+}
+
+.bg-royal-blue {
+  background-color: var(--color-primary);
+}
+
+.text-royal-blue {
+  color: var(--color-primary);
+}
+
+/* Light mode text color for gold accent on black backgrounds */
+[data-mode="light"] .bg-gold {
+  color: #000000;
+}
+
+.from-royal-blue\/10 {
+  --tw-gradient-from: rgb(from var(--color-primary) r g b / 0.1);
+}
+
+.from-royal-blue\/20 {
+  --tw-gradient-from: rgb(from var(--color-primary) r g b / 0.2);
+}
+
+.from-royal-blue\/30 {
+  --tw-gradient-from: rgb(from var(--color-primary) r g b / 0.3);
+}
+
+.from-royal-blue\/40 {
+  --tw-gradient-from: rgb(from var(--color-primary) r g b / 0.4);
+}
+
+.to-royal-blue\/20 {
+  --tw-gradient-to: rgb(from var(--color-primary) r g b / 0.2);
+}
+
+.to-royal-blue\/30 {
+  --tw-gradient-to: rgb(from var(--color-primary) r g b / 0.3);
+}
+
+.to-royal-blue\/40 {
+  --tw-gradient-to: rgb(from var(--color-primary) r g b / 0.4);
+}
+
+.from-gold\/10 {
+  --tw-gradient-from: rgb(from var(--color-accent) r g b / 0.1);
+}
+
+.from-gold\/20 {
+  --tw-gradient-from: rgb(from var(--color-accent) r g b / 0.2);
+}
+
+.from-gold\/30 {
+  --tw-gradient-from: rgb(from var(--color-accent) r g b / 0.3);
+}
+
+.from-gold\/40 {
+  --tw-gradient-from: rgb(from var(--color-accent) r g b / 0.4);
+}
+
+.to-gold\/60 {
+  --tw-gradient-to: rgb(from var(--color-accent) r g b / 0.6);
+}
+
+.border-gold\/10 {
+  border-color: rgb(from var(--color-accent) r g b / 0.1);
+}
+
+.border-gold\/20 {
+  border-color: rgb(from var(--color-accent) r g b / 0.2);
+}
+
+.border-gold\/30 {
+  border-color: rgb(from var(--color-accent) r g b / 0.3);
+}
+
+.border-gold\/50 {
+  border-color: rgb(from var(--color-accent) r g b / 0.5);
+}
+
+.border-gold\/60 {
+  border-color: rgb(from var(--color-accent) r g b / 0.6);
+}
+
+.bg-gold\/10 {
+  background-color: rgb(from var(--color-accent) r g b / 0.1);
+}
+
+.bg-gold\/20 {
+  background-color: rgb(from var(--color-accent) r g b / 0.2);
+}
+
+.bg-gold\/90 {
+  background-color: rgb(from var(--color-accent) r g b / 0.9);
+}
+
+.text-gold\/80 {
+  color: rgb(from var(--color-accent) r g b / 0.8);
+}
+
+.hover\:text-gold\/80:hover {
+  color: rgb(from var(--color-accent) r g b / 0.8);
+}
+
+.hover\:bg-gold\/90:hover {
+  background-color: rgb(from var(--color-accent) r g b / 0.9);
+}
+
+.hover\:border-gold:hover {
+  border-color: var(--color-accent);
+}
+
+.hover\:bg-gold\/20:hover {
+  background-color: rgb(from var(--color-accent) r g b / 0.2);
+}
+
+.shadow-gold\/20 {
+  --tw-shadow-color: rgb(from var(--color-accent) r g b / 0.2);
+}
+
+.shadow-gold\/30 {
+  --tw-shadow-color: rgb(from var(--color-accent) r g b / 0.3);
 }
