@@ -10,13 +10,6 @@ import Link from 'next/link';
 import Link from 'next/link';
 import Link from 'next/link';
 import Link from 'next/link';
-import Link from 'next/link';
-import Link from 'next/link';
-import Link from 'next/link';
-import Link from 'next/link';
-import Link from 'next/link';
-import Link from 'next/link';
-import Link from 'next/link';
 
 function ProfileTab() {
   const { user } = useAuth();
