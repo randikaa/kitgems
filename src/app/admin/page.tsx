@@ -76,7 +76,7 @@ export default function AdminDashboard() {
         .from('orders')
         .select('total');
       
-      const totalRevenue = ordersData?.reduce((sum, order) => sum + Number(order.total), 0) || 0;
+      const totalRevenue = ordersData?.reduce((sum, order) => sum + Number((order as any).total), 0) || 0;
       const avgOrderValue = ordersCount ? totalRevenue / ordersCount : 0;
 
       // Get recent users (last 7 days)
