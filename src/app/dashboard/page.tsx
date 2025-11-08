@@ -6,10 +6,6 @@ import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase/client';
 import Avatar from '@/components/Avatar';
 import Link from 'next/link';
-import Link from 'next/link';
-import Link from 'next/link';
-import Link from 'next/link';
-import Link from 'next/link';
 
 function ProfileTab() {
   const { user } = useAuth();
@@ -51,10 +47,10 @@ function ProfileTab() {
 
       if (data) {
         setProfile({
-          full_name: data.full_name || '',
-          email: data.email || user!.email || '',
-          phone: data.phone || '',
-          avatar_url: data.avatar_url || '',
+          full_name: (data as any).full_name || '',
+          email: (data as any).email || user!.email || '',
+          phone: (data as any).phone || '',
+          avatar_url: (data as any).avatar_url || '',
         });
       }
     } catch (error: any) {
@@ -77,7 +73,7 @@ function ProfileTab() {
         id: user!.id,
         email: user!.email!,
         full_name: user!.user_metadata?.full_name || '',
-      });
+      } as any);
 
       if (error && !error.message.includes('duplicate')) {
         throw error;
@@ -146,7 +142,7 @@ function ProfileTab() {
           full_name: profile.full_name,
           phone: profile.phone,
           avatar_url: publicUrl,
-        }, {
+        } as any, {
           onConflict: 'id'
         });
 
@@ -177,7 +173,7 @@ function ProfileTab() {
           full_name: profile.full_name,
           phone: profile.phone,
           avatar_url: profile.avatar_url,
-        }, {
+        } as any, {
           onConflict: 'id'
         });
 
@@ -203,20 +199,19 @@ function ProfileTab() {
   return (
     <div className="bg-gradient-to-br from-royal-blue/20 to-black border border-gold/20 rounded-lg p-8">
       <h2 className="text-2xl font-serif text-white mb-6">Profile Information</h2>
-      
+
       {message && (
-        <div className={`mb-6 p-4 rounded-lg ${
-          message.type === 'success' 
-            ? 'bg-green-500/20 border border-green-500/50 text-green-200' 
-            : 'bg-red-500/20 border border-red-500/50 text-red-200'
-        }`}>
+        <div className={`mb-6 p-4 rounded-lg ${message.type === 'success'
+          ? 'bg-green-500/20 border border-green-500/50 text-green-200'
+          : 'bg-red-500/20 border border-red-500/50 text-red-200'
+          }`}>
           {message.text}
         </div>
       )}
 
       <div className="mb-6 flex items-center space-x-4">
         <div className="relative">
-          <Avatar 
+          <Avatar
             src={profile.avatar_url}
             email={profile.email || user!.email || ''}
             alt={profile.full_name || 'User'}
@@ -412,7 +407,7 @@ export default function DashboardPage() {
         .eq('id', wishlistId);
 
       if (error) throw error;
-      
+
       setWishlist(items => items.filter(item => item.id !== wishlistId));
     } catch (error) {
       console.error('Error removing from wishlist:', error);
@@ -427,10 +422,10 @@ export default function DashboardPage() {
           user_id: user!.id,
           gem_id: gemId,
           quantity: 1,
-        });
+        } as any);
 
       if (error) throw error;
-      
+
       router.push('/cart');
     } catch (error) {
       console.error('Error adding to cart:', error);
@@ -461,7 +456,7 @@ export default function DashboardPage() {
           <div className="lg:col-span-1">
             <div className="bg-gradient-to-br from-royal-blue/20 to-black border border-gold/20 rounded-lg p-6">
               <div className="flex items-center space-x-4 mb-6 pb-6 border-b border-gold/20">
-                <Avatar 
+                <Avatar
                   src={user.user_metadata?.avatar_url}
                   email={user.email || ''}
                   alt={user.user_metadata?.full_name || 'User'}
@@ -487,11 +482,10 @@ export default function DashboardPage() {
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id as any)}
-                    className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition ${
-                      activeTab === tab.id
-                        ? 'bg-gold/20 text-gold border border-gold/30'
-                        : 'text-white/70 hover:bg-white/5'
-                    }`}
+                    className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition ${activeTab === tab.id
+                      ? 'bg-gold/20 text-gold border border-gold/30'
+                      : 'text-white/70 hover:bg-white/5'
+                      }`}
                   >
                     <span>{tab.icon}</span>
                     <span>{tab.label}</span>
@@ -517,7 +511,7 @@ export default function DashboardPage() {
                     <div className="text-6xl mb-4">📦</div>
                     <h3 className="text-xl text-white font-serif mb-2">No orders yet</h3>
                     <p className="text-white/60 mb-6">Start shopping to see your orders here</p>
-                    <Link 
+                    <Link
                       href="/shop"
                       className="inline-block px-6 py-3 bg-gold text-black font-semibold rounded-lg hover:bg-gold/90 transition"
                     >
@@ -531,19 +525,18 @@ export default function DashboardPage() {
                         <div>
                           <h3 className="text-white font-semibold mb-1">Order #{order.id.slice(0, 8).toUpperCase()}</h3>
                           <p className="text-white/60 text-sm">
-                            Placed on {new Date(order.created_at).toLocaleDateString('en-US', { 
-                              year: 'numeric', 
-                              month: 'short', 
-                              day: 'numeric' 
+                            Placed on {new Date(order.created_at).toLocaleDateString('en-US', {
+                              year: 'numeric',
+                              month: 'short',
+                              day: 'numeric'
                             })}
                           </p>
                         </div>
-                        <span className={`px-3 py-1 rounded-full text-sm ${
-                          order.status === 'delivered' ? 'bg-green-500/20 text-green-400' :
+                        <span className={`px-3 py-1 rounded-full text-sm ${order.status === 'delivered' ? 'bg-green-500/20 text-green-400' :
                           order.status === 'shipped' ? 'bg-blue-500/20 text-blue-400' :
-                          order.status === 'processing' ? 'bg-yellow-500/20 text-yellow-400' :
-                          'bg-gold/20 text-gold'
-                        }`}>
+                            order.status === 'processing' ? 'bg-yellow-500/20 text-yellow-400' :
+                              'bg-gold/20 text-gold'
+                          }`}>
                           {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
                         </span>
                       </div>
@@ -579,7 +572,7 @@ export default function DashboardPage() {
             {activeTab === 'auctions' && (
               <div className="space-y-6">
                 <h2 className="text-2xl font-serif text-white mb-6">My Auction Activity</h2>
-                
+
                 <div>
                   <h3 className="text-lg text-white mb-4">My Bids</h3>
                   {dataLoading ? (
@@ -591,7 +584,7 @@ export default function DashboardPage() {
                       <div className="text-6xl mb-4">⚡</div>
                       <h3 className="text-xl text-white font-serif mb-2">No bids yet</h3>
                       <p className="text-white/60 mb-6">Start bidding on auctions to see your activity here</p>
-                      <Link 
+                      <Link
                         href="/auctions"
                         className="inline-block px-6 py-3 bg-gold text-black font-semibold rounded-lg hover:bg-gold/90 transition"
                       >
@@ -605,7 +598,7 @@ export default function DashboardPage() {
                         const gem = auction && (Array.isArray(auction.gem) ? auction.gem[0] : auction.gem);
                         const isWinning = auction && bid.amount >= auction.current_bid;
                         const isLive = auction && auction.status === 'live';
-                        
+
                         return (
                           <div key={bid.id} className="bg-gradient-to-br from-royal-blue/20 to-black border border-gold/20 rounded-lg p-6">
                             <div className="flex justify-between items-start mb-4">
@@ -613,9 +606,8 @@ export default function DashboardPage() {
                                 <h4 className="text-white font-semibold mb-1">{gem?.name || 'Unknown Gem'}</h4>
                                 <p className="text-white/60 text-sm">{gem?.carat} ct • {gem?.origin}</p>
                               </div>
-                              <span className={`px-3 py-1 rounded-full text-sm font-bold ${
-                                isLive ? 'bg-gold text-black' : 'bg-white/10 text-white/60'
-                              }`}>
+                              <span className={`px-3 py-1 rounded-full text-sm font-bold ${isLive ? 'bg-gold text-black' : 'bg-white/10 text-white/60'
+                                }`}>
                                 {auction?.status?.toUpperCase() || 'ENDED'}
                               </span>
                             </div>
@@ -642,7 +634,7 @@ export default function DashboardPage() {
                               )}
                             </div>
                             {isLive && auction && (
-                              <Link 
+                              <Link
                                 href={`/auctions/${auction.id}`}
                                 className="block w-full mt-4 px-4 py-2 bg-gold text-black font-semibold rounded-lg hover:bg-gold/90 transition text-center"
                               >
@@ -670,7 +662,7 @@ export default function DashboardPage() {
                     <div className="text-6xl mb-4">❤️</div>
                     <h3 className="text-xl text-white font-serif mb-2">Your wishlist is empty</h3>
                     <p className="text-white/60 mb-6">Save your favorite gems to your wishlist</p>
-                    <Link 
+                    <Link
                       href="/shop"
                       className="inline-block px-6 py-3 bg-gold text-black font-semibold rounded-lg hover:bg-gold/90 transition"
                     >
@@ -698,13 +690,13 @@ export default function DashboardPage() {
                             <p className="text-white/60 text-sm mb-2">{gem.carat} ct • {gem.origin}</p>
                             <p className="text-gold font-semibold mb-3">${gem.price.toLocaleString()}</p>
                             <div className="flex gap-2">
-                              <button 
+                              <button
                                 onClick={() => addToCart(gem.id)}
                                 className="flex-1 px-4 py-2 bg-gold text-black font-semibold rounded-lg hover:bg-gold/90 transition"
                               >
                                 Add to Cart
                               </button>
-                              <button 
+                              <button
                                 onClick={() => removeFromWishlist(item.id)}
                                 className="px-4 py-2 bg-white/10 text-white rounded-lg hover:bg-red-500/20 hover:text-red-400 transition"
                               >
