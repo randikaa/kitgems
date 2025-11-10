@@ -37,26 +37,53 @@ export default async function AuctionsPage() {
           </p>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-8 mb-8">
-          <div className="flex-1">
-            <input
-              type="text"
-              placeholder="Search auctions..."
-              className="w-full px-6 py-3 bg-white/10 backdrop-blur border border-gold/20 rounded-lg focus:outline-none focus:border-gold text-white placeholder-white/40"
-            />
+        {liveAuctions.length === 0 ? (
+          // Empty State
+          <div className="bg-gradient-to-br from-royal-blue/20 to-black border border-gold/20 rounded-lg p-12 text-center">
+            <div className="text-8xl mb-6">⚡</div>
+            <h2 className="text-3xl font-serif text-white mb-4">No Live Auctions</h2>
+            <p className="text-white/60 mb-8 max-w-md mx-auto">
+              There are currently no live auctions. Check back soon or contact an admin to create new auctions.
+            </p>
+            <div className="flex gap-4 justify-center">
+              <a
+                href="/shop"
+                className="px-6 py-3 bg-gold text-black font-semibold rounded-lg hover:bg-gold/90 transition"
+              >
+                Browse Shop
+              </a>
+              <a
+                href="/admin"
+                className="px-6 py-3 bg-white/10 text-white font-semibold rounded-lg hover:bg-white/20 transition border border-gold/20"
+              >
+                Admin Dashboard
+              </a>
+            </div>
           </div>
-          <select className="px-6 py-3 bg-white/10 backdrop-blur border border-gold/20 rounded-lg focus:outline-none focus:border-gold text-white">
-            <option>Ending Soon</option>
-            <option>Highest Bid</option>
-            <option>Newly Added</option>
-          </select>
-        </div>
+        ) : (
+          <>
+            <div className="flex flex-col md:flex-row gap-8 mb-8">
+              <div className="flex-1">
+                <input
+                  type="text"
+                  placeholder="Search auctions..."
+                  className="w-full px-6 py-3 bg-white/10 backdrop-blur border border-gold/20 rounded-lg focus:outline-none focus:border-gold text-white placeholder-white/40"
+                />
+              </div>
+              <select className="px-6 py-3 bg-white/10 backdrop-blur border border-gold/20 rounded-lg focus:outline-none focus:border-gold text-white">
+                <option>Ending Soon</option>
+                <option>Highest Bid</option>
+                <option>Newly Added</option>
+              </select>
+            </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {liveAuctions.map(auction => (
-            <AuctionCard key={auction.id} auction={auction} />
-          ))}
-        </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {liveAuctions.map(auction => (
+                <AuctionCard key={auction.id} auction={auction} />
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
